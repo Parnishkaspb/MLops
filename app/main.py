@@ -95,10 +95,13 @@ async def get_posts():
     return {"posts": [dict(row) for row in posts]}
 
 @app.get("/posts/{post_id}")
-async def get_posts():
+async def get_post(post_id: int):
     async with pg_pool.acquire() as conn:
-        posts = await conn.fetch("SELECT * FROM posts WHERE id ;")
-    return {"posts": [dict(row) for row in posts]}
+        post = await conn.fetchrow("SELECT * FROM posts WHERE id = $1", post_id)
+    if post:
+        return {"post": dict(post)}
+    else:
+        return {"error": "Пост не найден"}
 
 class PostCreate(BaseModel):
     text: str
