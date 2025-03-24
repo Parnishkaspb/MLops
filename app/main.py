@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 import asyncpg
 import clickhouse_connect
 import os
 import asyncio
 from tenacity import retry, stop_after_attempt, wait_fixed
-from pydantic import BaseModel
+from Post.Post import PostService, PostCreate
+from app.Comment.Comment import CommentService
 
 app = FastAPI()
 
@@ -81,36 +82,29 @@ async def get_ch_version():
     return {"ClickHouse version": version}
 
 
-@app.get("/comments")
-async def get_comments():
-    async with pg_pool.acquire() as conn:
-        comments = await conn.fetch("SELECT * FROM comments;")
-    return {"comments": [dict(row) for row in comments]}
 
-
-@app.get("/posts")
+posts = APIRouter(prefix="/post", tags=["posts"])
+@posts.get("/")
 async def get_posts():
-    async with pg_pool.acquire() as conn:
-        posts = await conn.fetch("SELECT * FROM posts;")
-    return {"posts": [dict(row) for row in posts]}
+    return await PostService.get_posts()
 
-@app.get("/posts/{post_id}")
+@posts.get("/{post_id}")
 async def get_post(post_id: int):
-    async with pg_pool.acquire() as conn:
-        post = await conn.fetchrow("SELECT * FROM posts WHERE id = $1", post_id)
-    if post:
-        return {"post": dict(post)}
-    else:
-        return {"error": "Пост не найден"}
+    return await PostService.get_post(post_id)
 
-class PostCreate(BaseModel):
-    text: str
-
-@app.post("/posts")
+@posts.post("/")
 async def create_post(data: PostCreate):
-    async with pg_pool.acquire() as conn:
-        post = await conn.fetchrow(
-            "INSERT INTO posts (text) VALUES ($1) RETURNING *;",
-            data.text
-        )
-    return {"post": dict(post)}
+    return await PostService.create_post(data)
+
+
+comments = APIRouter(prefix="/comments", tags=["comments"])
+@app.get("/admin/comments")
+async def get_admin_comments():
+    return await CommentService.get_comments()
+
+@comments.get("/")
+async def get_comments_by_post_ID(post_id: int):
+    return await CommentService.get_comments_by_post_ID()
+
+
+
