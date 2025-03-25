@@ -1,4 +1,6 @@
 from backend.services.clickhouse import ch_client
+from backend.services.logger_config import logger
+
 
 async def init_ch():
     try:
@@ -7,6 +9,6 @@ async def init_ch():
                     text String
                 ) ENGINE = MergeTree() ORDER BY tuple()
             """)
-        print("✅ ClickHouse table ready")
+        logger.info("Таблица создана в ClickHouse")
     except Exception as e:
-        print("Ошибка при создании ClickHouse таблицы:", e)
+        logger.error("Ошибка при создании ClickHouse таблицы:", e)

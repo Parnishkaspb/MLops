@@ -1,3 +1,6 @@
+from backend.services.logger_config import logger
+
+
 async def init_db(pg_pool):
     async with pg_pool.acquire() as conn:
         await conn.execute("""
@@ -17,4 +20,4 @@ async def init_db(pg_pool):
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         """)
-        print("✅ Таблицы созданы (если их не было)")
+        logger.info("Таблицы созданы в PostgreSQL")
