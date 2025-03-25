@@ -1,23 +1,6 @@
 version: "3.9"
 
 services:
-  web:
-    build: .
-    container_name: fastapi_app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres
-      - clickhouse
-    volumes:
-      - .:/app
-    environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_PORT=8123
-      - CLICKHOUSE_PASSWORD=123456
-
   postgres:
     image: postgres:15
     container_name: postgres_db
@@ -47,6 +30,22 @@ services:
         soft: 262144
         hard: 262144
 
+  web:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - clickhouse
+    volumes:
+      - .:/app
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - CLICKHOUSE_HOST=clickhouse
+      - CLICKHOUSE_PORT=8123
+      - CLICKHOUSE_PASSWORD=123456
 volumes:
   postgres_data:
   clickhouse_data:
