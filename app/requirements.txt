@@ -1,5 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
+sqlalchemy[asyncio]
 asyncpg
 clickhouse-connect
 tenacity

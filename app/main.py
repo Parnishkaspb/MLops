@@ -1,16 +1,19 @@
 from fastapi import FastAPI, APIRouter
 import asyncpg
 import clickhouse_connect
-import os
-import asyncio
+import os, sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
 from tenacity import retry, stop_after_attempt, wait_fixed
-from Post.Post import PostService, PostCreate
-from app.Comment.Comment import CommentService
+# from backend.Post import PostService, PostCreate
+# from backend.Comment.Comment import CommentService
+from backend.routes import post
 
 app = FastAPI()
 
 pg_pool = None
 ch_client = None
+
+app.include_router(post.router)
 
 
 @retry(stop=stop_after_attempt(10), wait=wait_fixed(2))
@@ -81,30 +84,31 @@ async def get_ch_version():
     version = ch_client.query('SELECT version()').result_rows[0][0]
     return {"ClickHouse version": version}
 
-
-
-posts = APIRouter(prefix="/post", tags=["posts"])
-@posts.get("/")
-async def get_posts():
-    return await PostService.get_posts()
-
-@posts.get("/{post_id}")
-async def get_post(post_id: int):
-    return await PostService.get_post(post_id)
-
-@posts.post("/")
-async def create_post(data: PostCreate):
-    return await PostService.create_post(data)
-
-
-comments = APIRouter(prefix="/comments", tags=["comments"])
-@app.get("/admin/comments")
-async def get_admin_comments():
-    return await CommentService.get_comments()
-
-@comments.get("/")
-async def get_comments_by_post_ID(post_id: int):
-    return await CommentService.get_comments_by_post_ID()
+#
+#
+#
+# posts = APIRouter(prefix="/post", tags=["posts"])
+# @posts.get("/")
+# async def get_posts():
+#     return await PostService.get_posts()
+#
+# @posts.get("/{post_id}")
+# async def get_post(post_id: int):
+#     return await PostService.get_post(post_id)
+#
+# @posts.post("/")
+# async def create_post(data: PostCreate):
+#     return await PostService.create_post(data)
+#
+#
+# comments = APIRouter(prefix="/comments", tags=["comments"])
+# @app.get("/admin/comments")
+# async def get_admin_comments():
+#     return await CommentService.get_comments()
+#
+# @comments.get("/")
+# async def get_comments_by_post_ID(post_id: int):
+#     return await CommentService.get_comments_by_post_ID()
 
 
 

@@ -9,6 +9,8 @@ services:
     depends_on:
       - postgres
       - clickhouse
+    volumes:
+      - .:/app
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
@@ -26,17 +28,25 @@ services:
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   clickhouse:
     image: clickhouse/clickhouse-server:latest
     container_name: clickhouse_db
     ports:
-      - "8123:8123"  # HTTP
-      - "9000:9000"  # TCP
+      - "8123:8123"
+      - "9000:9000"
     environment:
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=123456
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
     ulimits:
       nofile:
         soft: 262144
         hard: 262144
+
+volumes:
+  postgres_data:
+  clickhouse_data:

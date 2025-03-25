@@ -15,6 +15,7 @@ class PostService:
     async def get_post(post_id: int):
         async with pg_pool.acquire() as conn:
             post = await conn.fetchrow("SELECT * FROM posts WHERE id = $1", post_id)
+            comments = await conn.fetchrow("SELECT * FROM comments WHERE post_id = $1", post_id)
         if post:
             return {"post": dict(post)}
         else:
