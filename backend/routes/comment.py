@@ -11,7 +11,7 @@ async def create_comment(data: CommentCreate, db: AsyncSession = Depends(get_db)
     if len(data.text) >= 50:
         click_crud.insert_click(data)
 
-    return comment_crud.store_comment(db, data)
+    return await comment_crud.store_comment(db, data)
 
 
 @router.get("/{post_id}", response_model=list[CommentOut])

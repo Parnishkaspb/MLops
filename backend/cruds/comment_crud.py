@@ -1,15 +1,17 @@
-from backend.models.models import Comment
-from backend.services.logger_config import logger
-from backend.services.clickhouse import ch_client
-from backend.schemas.comment import CommentCreate, CommentOut
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from backend.models.models import Comment
+from backend.deps import get_db
+from backend.schemas.comment import CommentCreate
 
-def store_comment(db, data: CommentCreate):
+
+async def store_comment(db: AsyncSession, data: CommentCreate) -> Comment:
     comment = Comment(post_id=data.post_id, text=data.text)
     db.add(comment)
-    db.commit()
-    db.refresh(comment)
+    await db.commit()
+    await db.refresh(comment)
     return comment
 
 
