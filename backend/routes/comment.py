@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from backend.schemas.comment import CommentCreate, CommentOut
-from backend.deps import get_db
+from backend.services.postgresql import get_db
 from backend.cruds import comment_crud, click_crud
 
 router = APIRouter(prefix="/comments", tags=["Comments"])

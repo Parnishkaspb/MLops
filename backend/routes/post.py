@@ -5,7 +5,7 @@ from sqlalchemy.orm import selectinload
 
 from backend.models.models import Post, Comment
 from backend.schemas.post import PostCreate, PostOut, PostWithComments
-from backend.deps import get_db
+from backend.services.postgresql import get_db
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
 

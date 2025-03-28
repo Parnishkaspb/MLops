@@ -14,3 +14,6 @@ class CommentOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class CommentAdminOut(BaseModel):
+    text: str

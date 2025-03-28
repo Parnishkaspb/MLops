@@ -5,3 +5,4 @@ asyncpg
 clickhouse-connect
 tenacity
 pydantic
+clickhouse-sqlalchemy
