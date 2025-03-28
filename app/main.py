@@ -3,8 +3,6 @@ import sys
 
 from fastapi import FastAPI
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
-
 from backend.services.logger_config import logger
 
 from backend.services.init.init_db import init_db

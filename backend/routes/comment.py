@@ -16,4 +16,4 @@ async def create_comment(data: CommentCreate, db: AsyncSession = Depends(get_db)
 
 @router.get("/{post_id}", response_model=list[CommentOut])
 async def get_comments_by_post_id(post_id: int, db: AsyncSession = Depends(get_db)):
-    return comment_crud.get_comments_by_post_id(db, post_id)
+    return await comment_crud.get_comments_by_post_id(db, post_id)
