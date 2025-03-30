@@ -15,7 +15,12 @@ async def store_comment(db: AsyncSession, data: CommentCreate) -> Comment:
 
 
 async def get_comments_by_post_id(post_id: int, db):
-    result = db.execute(select(Comment).where(Comment.post_id == post_id).where(Comment.ban == False).order_by(Comment.created_at.desc()))
+    result = db.execute(
+        select(Comment).
+        where(Comment.post_id == post_id).
+        where(Comment.ban == False).
+        order_by(Comment.created_at.desc())
+    )
     return result.scalars().all()
 
 

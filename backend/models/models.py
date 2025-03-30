@@ -1,8 +1,16 @@
 from datetime import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, Text, DateTime, Boolean
+from sqlalchemy import (
+    Boolean,
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    DateTime,
+)
 from sqlalchemy.orm import relationship
 from backend.services.postgresql import Base
-from clickhouse_sqlalchemy import types, make_session, get_declarative_base
+from clickhouse_sqlalchemy import get_declarative_base
 
 
 class Post(Base):
@@ -13,7 +21,11 @@ class Post(Base):
     ban = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    comments = relationship("Comment", back_populates="post", cascade="all, delete-orphan")
+    comments = relationship(
+        "Comment",
+        back_populates="post",
+        cascade="all, delete-orphan",
+    )
 
 
 class Comment(Base):
@@ -29,8 +41,9 @@ class Comment(Base):
 
 
 Base = get_declarative_base()
+
+
 class LongComment(Base):
     __tablename__ = 'long_comments'
 
     text = Column(String, primary_key=True)
-

@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 pg_pool = None
 
+
 @retry(stop=stop_after_attempt(10), wait=wait_fixed(2))
 async def connect_pg():
     global pg_pool
@@ -19,7 +20,6 @@ async def connect_pg():
     )
     logger.info("Connected to Postgres DB")
     return pg_pool
-
 
 
 DATABASE_URL = "postgresql+asyncpg://user:password@postgres:5432/mydb"
@@ -36,6 +36,7 @@ AsyncSessionLocal = sessionmaker(
 
 # Базовый класс моделей
 Base = declarative_base()
+
 
 async def get_db() -> AsyncSession:
     async with AsyncSessionLocal() as session:

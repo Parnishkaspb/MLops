@@ -7,6 +7,7 @@ from .comment import CommentOut
 class PostCreate(BaseModel):
     text: str
 
+
 class PostOut(BaseModel):
     id: int
     text: str
@@ -15,6 +16,7 @@ class PostOut(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class PostWithComments(BaseModel):
     id: int

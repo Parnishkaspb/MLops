@@ -1,9 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class CommentCreate(BaseModel):
     post_id: int
     text: str
+
 
 class CommentOut(BaseModel):
     id: int
@@ -14,6 +16,7 @@ class CommentOut(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class CommentAdminOut(BaseModel):
     text: str
