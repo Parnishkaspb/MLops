@@ -1,9 +1,11 @@
 import os
+
 import asyncpg
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from tenacity import retry, stop_after_attempt, wait_fixed
+
 from .logger_config import logger
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker, declarative_base
 
 pg_pool = None
 

@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
-from backend.models.models import Post, Comment
+from backend.models.models import Comment, Post
 from backend.schemas.post import PostCreate, PostOut, PostWithComments
 from backend.services.postgresql import get_db
 

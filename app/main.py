@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
-from backend.services.logger_config import logger
-from backend.services.init.init_db import init_db
+from backend.routes import admin, comment, post
 from backend.services.init.init_ch import init_ch
+from backend.services.init.init_db import init_db
+from backend.services.logger_config import logger
 from backend.services.postgresql import connect_pg
-from backend.routes import post, comment, admin
 
 app = FastAPI()
 

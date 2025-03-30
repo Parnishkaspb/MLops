@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-from backend.schemas.comment import CommentAdminOut
+
 from backend.cruds import comment_crud
+from backend.schemas.comment import CommentAdminOut
 
 router = APIRouter(prefix="/admin/comments", tags=["AdminComments"])
 

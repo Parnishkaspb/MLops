@@ -1,4 +1,5 @@
 import os
+
 import clickhouse_connect
 
 CLICKHOUSE_HOST = os.getenv("CLICKHOUSE_HOST", "clickhouse")

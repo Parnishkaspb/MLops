@@ -1,16 +1,18 @@
 from datetime import datetime
+
+from clickhouse_sqlalchemy import get_declarative_base
 from sqlalchemy import (
     Boolean,
     Column,
+    DateTime,
     ForeignKey,
     Integer,
     String,
     Text,
-    DateTime,
 )
 from sqlalchemy.orm import relationship
+
 from backend.services.postgresql import Base
-from clickhouse_sqlalchemy import get_declarative_base
 
 
 class Post(Base):

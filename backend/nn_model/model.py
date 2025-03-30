@@ -1,13 +1,12 @@
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
-import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score
+from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
-import numpy as np
-from transformers import BertTokenizer, BertModel
-
+from transformers import BertModel, BertTokenizer
 
 EMBED_MODEL = "DeepPavlov/rubert-base-cased"
 

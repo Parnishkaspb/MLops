@@ -1,6 +1,6 @@
+from backend.schemas.comment import CommentCreate
 from backend.services.clickhouse import ch_client
 from backend.services.logger_config import logger
-from backend.schemas.comment import CommentCreate
 
 
 def insert_click(data: CommentCreate):
