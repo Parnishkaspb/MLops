@@ -1,11 +1,11 @@
-version: "3.9"
-
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+      # лечим нулпоинтер
+      KAFKA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:-UseContainerSupport"
     ports:
       - "2181:2181"
 
@@ -22,6 +22,9 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      # лечим нулпоинтер
+      KAFKA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:-UseContainerSupport"
     volumes:
       - ./kafka-data:/var/lib/kafka/data
 
@@ -55,7 +58,7 @@ services:
         hard: 262144
 
   web:
-    build: .
+    build: ./api
     container_name: fastapi_app
     ports:
       - "8000:8000"
@@ -64,7 +67,7 @@ services:
       - clickhouse
       - kafka
     volumes:
-      - .:/app
+      - ./:/api
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432

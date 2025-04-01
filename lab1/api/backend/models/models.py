@@ -42,10 +42,10 @@ class Comment(Base):
     post = relationship("Post", back_populates="comments")
 
 
-Base = get_declarative_base()
+Basic = get_declarative_base()
 
 
-class LongComment(Base):
+class LongComment(Basic):
     __tablename__ = 'long_comments'
 
     text = Column(String, primary_key=True)
