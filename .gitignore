@@ -176,3 +176,6 @@ cython_debug/
 # ml staff
 *.csv
 *.pt
+
+# fu kafka
+kafka-data/
