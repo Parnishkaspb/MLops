@@ -74,6 +74,18 @@ services:
       - CLICKHOUSE_HOST=clickhouse
       - CLICKHOUSE_PORT=8123
       - CLICKHOUSE_PASSWORD=123456
+
+  cron_job:
+    build: ./cron_job
+    container_name: cron_job
+    ports:
+      - "9999:9999"
+    depends_on:
+      - postgres
+      - clickhouse
+      - kafka
+    volumes:
+      - ./:/cron_job
 volumes:
   postgres_data:
   clickhouse_data:

@@ -1,16 +1,16 @@
 import json
 from confluent_kafka import Producer, KafkaException
 
-KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
+KAFKA_BOOTSTRAP_SERVERS = "kafka:9092"
 KAFKA_TOPIC = "fastapi_messages"
 
 # Конфигурация продюсера
 conf = {
     'bootstrap.servers': KAFKA_BOOTSTRAP_SERVERS,
     'message.send.max.retries': 5,
-    'retry.backoff.ms': 1000,  # 1 секунда между попытками
+    'retry.backoff.ms': 1000,
     'default.topic.config': {
-        'acks': 'all'  # Ждем подтверждения от всех реплик
+        'acks': 'all'
     }
 }
 
