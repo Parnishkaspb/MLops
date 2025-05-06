@@ -1,7 +1,8 @@
 import json
+
 from confluent_kafka import Producer, KafkaException
 
-KAFKA_BOOTSTRAP_SERVERS = "kafka:9092"
+KAFKA_BOOTSTRAP_SERVERS = "kafka:29092"
 KAFKA_TOPIC = "fastapi_messages"
 
 # Конфигурация продюсера
@@ -27,7 +28,7 @@ def produce_message(value):
     """Отправка сообщения в Kafka"""
     try:
         # Сериализуем данные в JSON
-        json_value = json.dumps(value).encode('utf-8')
+        json_value = json.dumps(value.dict(), ensure_ascii=False).encode('utf-8')
         
         # Асинхронная отправка с callback
         producer.produce(
